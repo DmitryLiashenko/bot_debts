@@ -1,0 +1,53 @@
+# Виртуальное окружение
+venv/
+env/
+
+# Кэш и байт-код Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Конфиденциальные переменные и ключи
+.env
+*.env
+.env 2
+credentials.json
+
+# Файлы macOS
+.DS_Store
+
+# Логи и временные файлы
+*.log
+*.tmp
+
+# Настройки IDE
+.vscode/
+.idea/
+
+# Базы данных
+*.sqlite3
+
+# Jupyter ноутбуки-чекпоинты
+.ipynb_checkpoints/
+
+# PyInstaller
+*.spec
+dist/
+build/
+
+# coverage отчёты
+htmlcov/
+.coverage
+coverage.xml
+
+# mypy
+.mypy_cache/
+
+# pytest
+.pytest_cache/
+
+# pip
+pip-log.txt
+
+# VS Code launch configs
+.vscode/launch.json
