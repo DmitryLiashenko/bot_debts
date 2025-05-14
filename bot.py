@@ -1,28 +1,34 @@
 import os
 import gspread
+import json
 from dotenv import load_dotenv
-from oauth2client.service_account import ServiceAccountCredentials
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from google.oauth2.service_account import Credentials
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup 
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
- 
+
 
 # Загружает переменные из .env
 load_dotenv() 
+credentials_str = os.getenv("credentials_str")
+credentials_dict = json.loads(credentials_str)
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 allowed_users_raw = os.getenv("ALLOWED_USERNAMES", "")
 ALLOWED_USERNAMES = [user.strip() for user in allowed_users_raw.split(",") if user.strip()]
+# Храним авторизованных пользователей на время текущей сессии бота
 AUTHORIZED_USERS = set()
 
 
 # ===== Авторизация для Google Sheets =====
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('bot_debts/credentials.json', scope)
+
+scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+creds = Credentials.from_service_account_info(credentials_dict, scopes=scopes)
 client = gspread.authorize(creds)
 sheet = client.open_by_key(SPREADSHEET_ID).sheet1
 
 
 # ===== Команда /start — авторизация =====
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     if user.username in ALLOWED_USERNAMES:
@@ -82,6 +88,7 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("debts", get_data))
     app.run_polling()
+    
 
 
 if __name__ == "__main__":
