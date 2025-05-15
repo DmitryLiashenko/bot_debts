@@ -47,13 +47,13 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         data = sheet.get_all_values()
-        rows = data[1:15]  # строки 2-15
+        rows = data[1:17]  # строки 2-15
 
         dolgimy = ["*ДОЛГИ МЫ*"]
         dolginam = ["*ДОЛГИ НАМ*"]
         kassa = ["*КАССА*"]
         balans = ["*БАЛАНС*"]
-
+        
         for row in rows:
             # Долги МЫ: A и C (индексы 0 и 2)
             if len(row) > 2 and (row[0] or row[2]):
