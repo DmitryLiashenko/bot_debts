@@ -53,7 +53,7 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
         dolginam = ["*ДОЛГИ НАМ*"]
         kassa = ["*КАССА*"]
         balans = ["*БАЛАНС*"]
-        
+
         for row in rows:
             # Долги МЫ: A и C (индексы 0 и 2)
             if len(row) > 2 and (row[0] or row[2]):
@@ -69,20 +69,15 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             # Получаем ячейку A20
         balance_value = sheet.acell('A20').value
-        try:
-        # Удаляем пробелы и символы, если есть
-            clean_balance = str(balance_value).replace("€", "").strip()
-            balance_number = float(clean_balance)
-            balans.append(f"*Баланс:* {balance_number} €")
-        except ValueError:
-            balans.append("*Баланс:* ошибка чтения значения")
+        if balance_value:
+            balans.append(balance_value)
+
 
         await update.message.reply_text("\n".join(dolgimy), parse_mode='Markdown')
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
         await update.message.reply_text("\n".join(kassa), parse_mode='Markdown')
         await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
-        if int(balans) < 0:
-            await update.message.reply_text("Касса в минусе - пора сдавать бутылки!! Мужики когда работать будете!!!!????", parse_mode='Markdown')
+
     except Exception as e:
         await update.message.reply_text(f"Ошибка: {e}")
 
