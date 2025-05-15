@@ -69,9 +69,13 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             # Получаем ячейку A20
         balance_value = sheet.acell('A20').value
-        if balance_value:
-            balans.append(balance_value)
-
+        try:
+        # Удаляем пробелы и символы, если есть
+            clean_balance = str(balance_value).replace("€", "").strip()
+            balance_number = float(clean_balance)
+            balans.append(f"*Баланс:* {balance_number} €")
+        except ValueError:
+            balans.append("*Баланс:* ошибка чтения значения")
 
         await update.message.reply_text("\n".join(dolgimy), parse_mode='Markdown')
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
