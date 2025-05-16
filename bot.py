@@ -77,9 +77,10 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
         await update.message.reply_text("\n".join(kassa), parse_mode='Markdown')
         await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
-        await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
         if int(balans[1]) < 0:
             await update.message.reply_text("💸 Касса в минусе — пора сдавать бутылки!\n👷‍♂️ Мужики, когда работать будете?!")
+        elif int(balans[1]) > 0:
+            await update.message.reply_text("О,можно и поделить денюжку)))")
     except Exception as e:
         await update.message.reply_text(f"Ошибка: {e}")
     
