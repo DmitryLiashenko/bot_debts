@@ -77,10 +77,11 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
         await update.message.reply_text("\n".join(kassa), parse_mode='Markdown')
         await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
-
+        print(type(balans[1]))
+        print(balans[1])
     except Exception as e:
         await update.message.reply_text(f"Ошибка: {e}")
-
+    
 
 # ===== Run Bot =====
 def main():
