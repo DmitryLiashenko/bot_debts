@@ -6,11 +6,12 @@ env/
 __pycache__/
 *.py[cod]
 *.so
+.gitignore
+.dockerignore
 
 # Конфиденциальные переменные и ключи
 .env
 *.env
-.env 2
 credentials.json
 
 # Файлы macOS

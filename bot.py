@@ -1,6 +1,4 @@
-import os
-import gspread
-import json
+import os, gspread, json
 from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup 
