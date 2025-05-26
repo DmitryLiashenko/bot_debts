@@ -12,6 +12,7 @@ credentials_str = os.getenv("credentials_str")
 credentials_dict = json.loads(credentials_str)
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+SOURCE_SPREADSHEET_ID = os.getenv("SOURCE_SPREADSHEET_ID")
 allowed_users_raw = os.getenv("ALLOWED_USERNAMES", "")
 ALLOWED_USERNAMES = [user.strip() for user in allowed_users_raw.split(",") if user.strip()]
 # Храним авторизованных пользователей на время текущей сессии бота
@@ -75,12 +76,11 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if balance_value:
             balans.append(balance_value)
 
-
         await update.message.reply_text("\n".join(dolgimy), parse_mode='Markdown')
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
         await update.message.reply_text("\n".join(kassa), parse_mode='Markdown')
         await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
-        formatted_time = get_last_modified(creds, SPREADSHEET_ID)
+        formatted_time = get_last_modified(creds, SOURCE_SPREADSHEET_ID)
         await update.message.reply_text(f"📅 Последнее обновление таблицы: {formatted_time}")
         if int(balans[1]) < 0:
             await update.message.reply_text("💸 Касса в минусе — пора сдавать бутылки!\n👷‍♂️ Мужики, когда работать будете?!")
