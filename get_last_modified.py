@@ -1,5 +1,5 @@
 from googleapiclient.discovery import build
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def get_last_modified(creds, spreadsheet_id):
@@ -10,5 +10,5 @@ def get_last_modified(creds, spreadsheet_id):
         .execute()
     )
     last_modified = metadata["modifiedTime"]
-    dt = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%S.%fZ")
+    dt = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%S.%fZ") + timedelta(hours=3)
     return dt.strftime("%d.%m.%Y %H:%M")
