@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup 
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
+from get_last_modified import get_last_modified
 
 
 # Загружает переменные из .env
@@ -75,13 +76,15 @@ async def get_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("\n".join(dolginam), parse_mode='Markdown')
         await update.message.reply_text("\n".join(kassa), parse_mode='Markdown')
         await update.message.reply_text("\n".join(balans), parse_mode='Markdown')
+        formatted_time = get_last_modified(creds, SPREADSHEET_ID)
+        await update.message.reply_text(f"📅 Последнее обновление таблицы: {formatted_time}")
         if int(balans[1]) < 0:
             await update.message.reply_text("💸 Касса в минусе — пора сдавать бутылки!\n👷‍♂️ Мужики, когда работать будете?!")
         elif int(balans[1]) > 0:
             await update.message.reply_text("О,можно и поделить денюжку)))")
     except Exception as e:
         await update.message.reply_text(f"Ошибка: {e}")
-    
+
 
 # ===== Run Bot =====
 def main():
@@ -89,7 +92,6 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("debts", get_data))
     app.run_polling()
-    
 
 
 if __name__ == "__main__":
