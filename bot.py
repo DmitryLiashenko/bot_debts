@@ -20,7 +20,11 @@ AUTHORIZED_USERS = set()
 
 # ===== Авторизация для Google Sheets =====
 
-scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+scopes = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.metadata.readonly",
+]
+
 creds = Credentials.from_service_account_info(credentials_dict, scopes=scopes)
 client = gspread.authorize(creds)
 sheet = client.open_by_key(SPREADSHEET_ID).sheet1
