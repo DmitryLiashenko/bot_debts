@@ -4,7 +4,7 @@ from google.oauth2.service_account import Credentials
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from get_last_modified import get_last_modified
-from auth import authorize_user, is_user_authorized  # ← Новый импорт
+from auth import authorize_user, is_user_authorized 
 
 # === Загрузка переменных окружения ===
 load_dotenv()
