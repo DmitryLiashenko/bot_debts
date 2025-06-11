@@ -1,18 +1,27 @@
-import os, gspread, json
-from dotenv import load_dotenv
+import os
+import gspread
+import json
 from google.oauth2.service_account import Credentials
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from get_last_modified import get_last_modified
-from auth import authorize_user, is_user_authorized 
+from auth import authorize_user, is_user_authorized
 
-# === Загрузка переменных окружения ===
-load_dotenv()
-credentials_str = os.getenv("credentials_str")
-credentials_dict = json.loads(credentials_str)
+# === Получение переменных окружения ===
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SOURCE_SPREADSHEET_ID = os.getenv("SOURCE_SPREADSHEET_ID")
+credentials_str = os.getenv("CREDENTIALS_STR")
+
+if (
+    not BOT_TOKEN
+    or not SPREADSHEET_ID
+    or not SOURCE_SPREADSHEET_ID
+    or not credentials_str
+):
+    raise ValueError("Одно или несколько обязательных переменных окружения не заданы")
+
+credentials_dict = json.loads(credentials_str)
 
 # === Авторизация Google Sheets ===
 scopes = [
