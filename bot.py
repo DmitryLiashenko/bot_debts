@@ -11,7 +11,7 @@ from auth import authorize_user, is_user_authorized
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 SOURCE_SPREADSHEET_ID = os.getenv("SOURCE_SPREADSHEET_ID")
-credentials_str = os.getenv("CREDENTIALS_STR")
+credentials_str = os.getenv("credentials_str")
 
 if (
     not BOT_TOKEN
