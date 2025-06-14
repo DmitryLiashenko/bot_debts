@@ -1,9 +1,9 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from services.auth import is_user_authorized
+from services.get_last_modified import get_last_modified
 from services.google_sheets import (
     get_debts_data,
-    get_last_modified,
     creds,
     SOURCE_SPREADSHEET_ID,
 )

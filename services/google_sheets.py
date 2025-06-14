@@ -23,18 +23,6 @@ client = gspread.authorize(creds)
 sheet = client.open_by_key(SPREADSHEET_ID).sheet1
 
 
-def get_last_modified(creds, spreadsheet_id):
-    drive_service = build("drive", "v3", credentials=creds)
-    metadata = (
-        drive_service.files()
-        .get(fileId=spreadsheet_id, fields="modifiedTime")
-        .execute()
-    )
-    last_modified = metadata["modifiedTime"]
-    dt = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%S.%fZ") + timedelta(hours=3)
-    return dt.strftime("%d.%m.%Y %H:%M")
-
-
 def get_debts_data():
     data = sheet.get_all_values()
     rows = data[1:17]
