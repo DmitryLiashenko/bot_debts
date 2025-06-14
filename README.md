@@ -1,115 +1,74 @@
-# 🤖 Telegram Bot for Tracking Debts via Google Sheets
+🏦 Debt Tracker Telegram Bot
 
-A simple Telegram bot that helps track group debts, balances, and cash flows, using **Google Sheets** as a backend. Only authorized Telegram users can access the data.
+A Telegram bot to track group debts and cash balance from Google Sheets.
 
----
+🚀 Features
 
-## 🚀 Features
+✅ Authorization by Telegram username
+📊 Retrieve debts from a Google Sheet
+🕒 Show last update time of the sheet
+⚙️ Easy to deploy to Fly.io
+📁 Project Structure
 
-- 🔐 **User authentication** via `/start`
-- 📊 **View debts and balances** via `/debts`
-- 📁 **Google Sheets integration** for real-time data
+bot_debts/
+├── main.py              # Entry point of the bot
+├── commands/            # Telegram bot commands
+│   ├── start.py         # /start command (authorization)
+│   └── debts.py         # /debts command (show debts)
+├── services/            # Logic modules
+│   ├── auth.py          # User authorization
+│   └── google_sheets.py # Google Sheets and Drive integration
+├── requirements.txt     # Python dependencies
+├── README.md
+├── .env                 # Environment variables
+└── fly.toml             # Fly.io configuration
+⚙️ Setup and Deployment
 
----
-
-## ⚙️ Setup Instructions
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/DmitryLiashenko/bot_debts.git
+1️⃣ Clone the repository
+git clone https://github.com/your-username/your-repo.git
 cd bot_debts
-```
-
-### 2. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Add Your Secrets to `.env`
-
-Create a file named `.env` in the project root:
-
-```dotenv
+2️⃣ Create .env file with the following content:
 BOT_TOKEN=your_telegram_bot_token
-SPREADSHEET_ID=your_google_sheet_id
-credentials_str={"type": "...", "project_id": "..."}  # JSON string from Google credentials
+SPREADSHEET_ID=your_spreadsheet_id
+SOURCE_SPREADSHEET_ID=your_source_spreadsheet_id
+CREDENTIALS_STR={"type":"service_account",...}  # JSON key from Google Cloud
 ALLOWED_USERNAMES=user1,user2,user3
-```
+3️⃣ Install dependencies
+pip install -r requirements.txt
+4️⃣ Run locally
+python main.py
+5️⃣ Deploy to Fly.io
+fly launch
+fly deploy
+💬 Available Commands
 
-> ⚠️ **Keep your `.env` and any credential `.json` files out of version control.**  
-> Use a `.gitignore` file to prevent them from being committed:
+Command	Description
+/start	Authorize user by username
+/debts	Show debts, cash balance and status
+🗝 Environment Variables
 
-**.gitignore**
-```
-.env
-*.json
-```
+Variable	Description
+BOT_TOKEN	Telegram Bot Token
+SPREADSHEET_ID	ID of the working spreadsheet
+SOURCE_SPREADSHEET_ID	ID of the spreadsheet for modification dates
+CREDENTIALS_STR	JSON string for Google Service Account
+ALLOWED_USERNAMES	Comma-separated list of allowed usernames
+🏗 Example .env
 
----
+BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrSTUvwxYZ
+SPREADSHEET_ID=1A2B3C4D5E6F7G8H9I0J
+SOURCE_SPREADSHEET_ID=9I8H7G6F5E4D3C2B1A
+CREDENTIALS_STR={"type":"service_account",...}
+ALLOWED_USERNAMES=username1,username2
+📦 Install on a fresh machine (all in one):
 
-### 4. Run the Bot
+git clone https://github.com/your-username/your-repo.git
+cd bot_debts
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env  # Fill your data
+python main.py
+📜 License
 
-```bash
-python bot.py
-```
-
----
-
-## 📦 Deployment
-
-You can deploy the bot to platforms that support Python and environment variables.  
-Examples:
-
-### ✅ Fly.io (with Docker)
-
-1. **Create a `Dockerfile`** in your project root (example below)
-2. **Install the Fly.io CLI** and run:
-   ```bash
-   fly launch
-   fly deploy
-   ```
-
-**Example `Dockerfile`:**
-```Dockerfile
-FROM python:3.10-slim
-
-WORKDIR /app
-
-COPY . .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-CMD ["python", "bot.py"]
-```
-
-Don't forget to set secrets:
-
-```bash
-fly secrets set BOT_TOKEN=xxx SPREADSHEET_ID=xxx credentials_str='{"type":"service_account",...}' ALLOWED_USERNAMES=user1,user2
-```
-
-> Optionally, use other platforms like Railway, Render, Heroku, etc.
-
----
-
-## 🧪 Manual Testing
-
-You can test the bot by sending these commands in Telegram:
-
-- `/start` – authorizes the user
-- `/debts` – fetches and displays debts, balances, and cash data
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── bot.py               # Main bot logic
-├── .env                 # Environment variables (NOT in git)
-├── requirements.txt     # Project dependencies
-├── Dockerfile           # For deployment (optional)
-└── README.md            # Project documentation
-```
+MIT — use it freely, contribute if you want 👷
