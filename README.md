@@ -16,17 +16,17 @@ A Telegram bot to track group debts and cash balance from Google Sheets.
 ## 📁 Project Structure
 
 bot_debts/
-├── main.py # Entry point of the bot
-├── commands/ # Telegram bot commands
-│ ├── start.py # /start command (authorization)
-│ └── debts.py # /debts command (show debts)
-├── services/ # Logic modules
-│ ├── auth.py # User authorization
-│ └── google_sheets.py # Google Sheets and Drive integration
-├── requirements.txt # Python dependencies
+├── main.py              # Entry point of the bot
+├── commands/            # Telegram bot commands
+│   ├── start.py         # /start command (authorization)
+│   └── debts.py         # /debts command (show debts)
+├── services/            # Logic modules
+│   ├── auth.py          # User authorization
+│   └── google_sheets.py # Google Sheets and Drive integration
+├── requirements.txt     # Python dependencies
 ├── README.md
-├── .env # Environment variables
-└── fly.toml # Fly.io configuration
+├── .env                 # Environment variables
+└── fly.toml             # Fly.io configuration
 
 
 ## ⚙️ Setup and Deployment
@@ -44,9 +44,12 @@ SOURCE_SPREADSHEET_ID=your_source_spreadsheet_id
 CREDENTIALS_STR={"type":"service_account",...}  # JSON key from Google Cloud
 ALLOWED_USERNAMES=user1,user2,user3
 
-4️⃣ Run locally
+3️⃣ Install dependencies
+pip install -r requirements.txt
 
-python main.py
+4️⃣ Run locally
+python main.py - need to refactoring .env file
+
 5️⃣ Deploy to Fly.io
 
 fly launch
