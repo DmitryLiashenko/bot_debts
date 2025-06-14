@@ -2,8 +2,6 @@
 
 A Telegram bot to track group debts and cash balance from Google Sheets.
 
----
-
 ## 🚀 Features
 
 - ✅ Authorization by Telegram username  
@@ -11,10 +9,9 @@ A Telegram bot to track group debts and cash balance from Google Sheets.
 - 🕒 Show last update time of the sheet  
 - ⚙️ Easy to deploy to Fly.io  
 
----
-
 ## 📁 Project Structure
 
+```bash
 bot_debts/
 ├── main.py              # Entry point of the bot
 ├── commands/            # Telegram bot commands
@@ -28,11 +25,7 @@ bot_debts/
 ├── .env                 # Environment variables
 └── fly.toml             # Fly.io configuration
 
-
-## ⚙️ Setup and Deployment
-
-1️⃣ Clone the repository  
-```bash
+⚙️ Setup and Deployment
 git clone https://github.com/your-username/your-repo.git
 cd bot_debts
 
@@ -44,38 +37,38 @@ SOURCE_SPREADSHEET_ID=your_source_spreadsheet_id
 CREDENTIALS_STR={"type":"service_account",...}  # JSON key from Google Cloud
 ALLOWED_USERNAMES=user1,user2,user3
 
-3️⃣ Install dependencies
+3️⃣ Install dependencies:
 pip install -r requirements.txt
 
-4️⃣ Run locally
-python main.py - need to refactoring .env file
+4️⃣ Run locally:
+python main.py #need to refactoring .env
 
-5️⃣ Deploy to Fly.io
-
+5️⃣ Deploy to Fly.io:
 fly launch
 fly deploy
 
 💬 Available Commands
+| Command | Description                      |
+| ------- | -------------------------------- |
+| /start  | Authorize user by username       |
+| /debts  | Show debts, cash balance, status |
 
-Command	Description
-/start	Authorize user by username
-/debts	Show debts, cash balance and status
 🗝 Environment Variables
+| Variable                | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `BOT_TOKEN`             | Telegram Bot Token                           |
+| `SPREADSHEET_ID`        | ID of the working spreadsheet                |
+| `SOURCE_SPREADSHEET_ID` | ID of the spreadsheet for modification dates |
+| `CREDENTIALS_STR`       | JSON string for Google Service Account       |
+| `ALLOWED_USERNAMES`     | Comma-separated list of allowed usernames    |
 
-Variable	Description
-BOT_TOKEN	Telegram Bot Token
-SPREADSHEET_ID	ID of the working spreadsheet
-SOURCE_SPREADSHEET_ID	ID of the spreadsheet for modification dates
-CREDENTIALS_STR	JSON string for Google Service Account
-ALLOWED_USERNAMES	Comma-separated list of allowed usernames
-
+🏗 Example .env
 
 BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrSTUvwxYZ
 SPREADSHEET_ID=1A2B3C4D5E6F7G8H9I0J
 SOURCE_SPREADSHEET_ID=9I8H7G6F5E4D3C2B1A
 CREDENTIALS_STR={"type":"service_account",...}
 ALLOWED_USERNAMES=username1,username2
-
 
 📦 Install on a fresh machine (all in one):
 
