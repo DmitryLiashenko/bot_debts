@@ -10,6 +10,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Если у пользователя есть username
     if user.username:
         if authorize_user(user.username):
+            # Сохраняем идентификатор
+            context.user_data["identifier"] = user.username
             await update.message.reply_text(
                 f"Привет, @{user.username}! Вы успешно авторизованы."
             )

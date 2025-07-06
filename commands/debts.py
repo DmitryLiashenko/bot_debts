@@ -10,8 +10,9 @@ from services.google_sheets import (
 
 
 async def debts(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user = update.effective_user
-    if not is_user_authorized(user.username):
+    identifier = context.user_data.get("identifier")
+
+    if not identifier or not is_user_authorized(identifier):
         await update.message.reply_text(
             "Пожалуйста, авторизируйтесь сначала через команду /start."
         )

@@ -14,17 +14,6 @@ ALLOWED_USERNAMES = [
 AUTHORIZED_USERS = set()
 
 
-def get_user_identifier(update: Update) -> str | None:
-    """Возвращает username, если есть, иначе телефон (если был предоставлен)."""
-    user = update.effective_user
-    if user.username:
-        return user.username
-    contact = update.message.contact if update.message else None
-    if contact and contact.phone_number:
-        return contact.phone_number.replace("+", "")
-    return None
-
-
 def is_user_allowed(identifier: str) -> bool:
     return identifier in ALLOWED_USERNAMES
 
@@ -48,6 +37,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if user.username:
         identifier = user.username
         if authorize_user(identifier):
+            # Сохраняем идентификатор в пользовательских данных
+            context.user_data["identifier"] = identifier
             await update.message.reply_text(
                 f"Привет, @{identifier}! Вы успешно авторизованы."
             )
@@ -80,6 +71,8 @@ async def contact_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     if contact and contact.phone_number:
         phone = contact.phone_number.replace("+", "")
         if authorize_user(phone):
+            # Сохраняем идентификатор в пользовательских данных
+            context.user_data["identifier"] = phone
             await update.message.reply_text(
                 "✅ Вы успешно авторизованы по номеру телефона."
             )
