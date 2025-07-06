@@ -67,6 +67,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 # === Обработка контакта (номер телефона) ===
 async def contact_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     contact = update.message.contact
+
+    # 🔐 Защита: пользователь должен отправить СВОЙ номер
+    if contact.user_id != update.effective_user.id:
+        await update.message.reply_text(
+            "❗️Пожалуйста, поделитесь именно СВОИМ номером телефона."
+        )
+        return
+
     if contact and contact.phone_number:
         phone = contact.phone_number.replace("+", "")
         if authorize_user(phone):
