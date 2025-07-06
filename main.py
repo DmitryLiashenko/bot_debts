@@ -14,13 +14,13 @@ from services.auth import contact_handler
 
 # Обёртка с уведомлением для команды /start
 async def notify_start(update, context):
-    await notify_admin(context.bot, update, "👋 Использует команду /start")
+    await notify_admin(context.bot, update, "👋 Использует команду /start", context)
     await start(update, context)
 
 
 # Обёртка с уведомлением для команды /debts
 async def notify_debts(update, context):
-    await notify_admin(context.bot, update, "💼 Использует команду /debts")
+    await notify_admin(context.bot, update, "💼 Использует команду /debts", context)
     await debts(update, context)
 
 
