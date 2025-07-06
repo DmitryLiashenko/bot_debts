@@ -1,6 +1,8 @@
 import os
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
+from services.notifications import notify_admin
+
 
 # Чтение списка разрешенных пользователей (username и номера телефонов без +)
 allowed_users_raw = os.getenv("ALLOWED_USERNAMES", "")
